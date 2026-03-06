@@ -1,0 +1,22 @@
+[
+  {"query": "幫我找一些關於 NFC 果汁市場的 YouTube 影片", "should_trigger": true},
+  {"query": "我想搜尋 YouTube 上面有沒有人講 FSVP compliance 的教學影片", "should_trigger": true},
+  {"query": "search YouTube for videos about cold pressed juice business in the US", "should_trigger": true},
+  {"query": "這個 YouTube 影片的觀看數和上傳日期是什麼 https://youtu.be/abc123", "should_trigger": true},
+  {"query": "幫我抓這部影片的字幕，我想看逐字稿 https://www.youtube.com/watch?v=xyz789", "should_trigger": true},
+  {"query": "find me some videos about how to set up a trade show booth", "should_trigger": true},
+  {"query": "搜影片 台灣水果外銷 看有沒有什麼案例可以參考", "should_trigger": true},
+  {"query": "I want to download the English subtitles from this video https://youtube.com/watch?v=def456", "should_trigger": true},
+  {"query": "can you get the transcript of this video? https://youtu.be/RAZVk5NPNtE", "should_trigger": true},
+  {"query": "搜一下 Nate Herk 的 YouTube 影片", "should_trigger": true},
+  {"query": "幫我把這篇文章做成播客 https://example.com/article", "should_trigger": false},
+  {"query": "generate an image of a tropical fruit smoothie bar", "should_trigger": false},
+  {"query": "幫我寫一封 email 給 Sherri 確認報關文件的進度", "should_trigger": false},
+  {"query": "我想看 NFC 果汁的市場研究報告，幫我搜一下網路上的資料", "should_trigger": false},
+  {"query": "幫我把這個 PDF 上傳到 NotebookLM", "should_trigger": false},
+  {"query": "read the file and summarize it", "should_trigger": false},
+  {"query": "幫我用 Google 搜尋 NRA 2026 exhibitor list", "should_trigger": false},
+  {"query": "create a PowerPoint presentation about our product lineup", "should_trigger": false},
+  {"query": "download this webpage and save it as markdown", "should_trigger": false},
+  {"query": "幫我分析一下競品的 Instagram 帳號都在發什麼內容", "should_trigger": false}
+]
