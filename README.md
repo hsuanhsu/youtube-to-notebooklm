@@ -1,122 +1,134 @@
-# YouTube → NotebookLM 研究工作流
+# youtube-to-notebooklm
 
-用自然語言搜 YouTube 影片、推進 NotebookLM、生成播客/摘要/思維導圖等產出。全程在終端完成，不用切視窗。
+Search YouTube, grab transcripts, push to NotebookLM, and generate podcasts, mind maps, quizzes — all from your terminal with natural language.
 
-## 它做什麼
+搜 YouTube 影片、抓逐字稿、推進 NotebookLM，生成播客、思維導圖、測驗 — 全程在終端用自然語言完成。
 
 ```
-「幫我找 cold pressed juice 的教學影片」
-    ↓ AI Agent 觸發 yt-search skill
-列出 20 部影片（標題、頻道、時長、觀看數）
-    ↓ 你挑選
-「把第 3 部上傳到 NotebookLM 生成播客」
-    ↓ AI Agent 觸發 anything-to-notebooklm skill
-NotebookLM 處理 → 播客音檔下載到本機
+You:   "Find me videos about cold pressed juice"
+       「幫我找 cold pressed juice 的教學影片」
+            ↓  yt-search skill
+Agent: Lists 20 videos (title, channel, duration, views)
+            ↓  You pick one
+You:   "Upload #3 to NotebookLM and generate a podcast"
+       「把第 3 部上傳到 NotebookLM 生成播客」
+            ↓  anything-to-notebooklm skill
+Agent: Downloads 34 MB podcast to your machine
 ```
 
-## 需要什麼
+![Demo: mind map, summary with footnotes, and podcast generation in terminal](demo.png)
+
+## How It Works / 運作方式
+
+Two [AI Agent Skills](https://docs.anthropic.com/en/docs/claude-code/skills) that work together:
+
+| Skill | What it does |
+|-------|-------------|
+| **yt-search** | Search YouTube, get metadata, download subtitles via [yt-dlp](https://github.com/yt-dlp/yt-dlp) |
+| **anything-to-notebooklm** | Upload any content to [NotebookLM](https://notebooklm.google.com/) and generate outputs via [notebooklm-py](https://github.com/nicholasgcoles/notebooklm-py) |
+
+Your AI agent reads these skills and knows when to call which tool — you just talk to it.
+
+## Prerequisites / 前置條件
 
 - **Python 3.10+**
-- **支援 Skills 的 AI Agent**（Claude Code、Cursor、Windsurf、或任何支援 `~/.claude/skills/` 的 Agent）
-- **Google 帳號**（NotebookLM 免費使用）
+- **Google account** (NotebookLM is free / NotebookLM 免費)
+- **AI Agent with Skills support** — Claude Code, Cursor, Windsurf, or any agent that reads `~/.claude/skills/`
 
-## 安裝
+## Getting Started / 安裝
 
 ```bash
-git clone https://github.com/你的帳號/youtube-to-notebooklm.git
+git clone https://github.com/azuma520/youtube-to-notebooklm.git
 cd youtube-to-notebooklm
 bash install.sh
 ```
 
-安裝腳本會：
-1. `pip install` 三個工具（yt-dlp、notebooklm-py、markitdown）
-2. 複製兩個 Skills 到 `~/.claude/skills/`
-3. 開瀏覽器登入 NotebookLM（只需一次）
+The script installs three pip packages, copies the skills to `~/.claude/skills/`, and opens a browser to log in to NotebookLM (one-time).
 
-裝完重啟你的 AI Agent 即可。
+安裝腳本會裝三個 pip 套件、複製 Skills、開瀏覽器登入 NotebookLM（只需一次）。
 
-### 手動安裝
+> [!IMPORTANT]
+> After installation, **restart your AI agent** to load the new skills.
+> 安裝完請**重啟 AI Agent** 讓它載入新 Skills。
 
-如果你不想用腳本：
+<details>
+<summary>Manual installation / 手動安裝</summary>
 
 ```bash
-# 裝工具
 pip install yt-dlp notebooklm-py markitdown
 
-# 複製 skills（改成你的 Agent 的 skills 路徑）
 cp -r skills/yt-search ~/.claude/skills/
 cp -r skills/anything-to-notebooklm ~/.claude/skills/
 
-# 登入 NotebookLM
 notebooklm login
 ```
 
-## 用法
+</details>
 
-安裝完後，直接用自然語言對 AI Agent 說話：
+## Usage / 用法
 
-### 搜 YouTube
+Talk to your agent in natural language. Skills trigger automatically.
 
-- 「幫我搜 NFC juice market 的 YouTube 影片」
-- 「search YouTube for videos about trade show booth setup」
-- 「找影片 台灣水果外銷」
+安裝完直接用自然語言對 AI Agent 說話，Skills 會自動觸發。
 
-### 抓字幕 / 逐字稿
+### Search YouTube / 搜影片
 
-- 「幫我抓這部影片的字幕 https://youtube.com/watch?v=...」
-- 「get the transcript of this video」
+```
+"search YouTube for videos about trade show booth setup"
+「搜影片 台灣水果外銷」
+「幫我搜 NFC juice market 的 YouTube 影片」
+```
 
-### 推進 NotebookLM
+### Get Transcripts / 抓字幕
 
-- 「把這個影片上傳到 NotebookLM https://youtube.com/watch?v=...」
-- 「把這個網頁做成播客 https://example.com/article」
-- 「把這個 PDF 生成思維導圖 ~/Documents/research.pdf」
+```
+"get the transcript of this video https://youtu.be/..."
+「幫我抓這部影片的字幕 https://youtube.com/watch?v=...」
+```
 
-### 可以生成什麼
+### Push to NotebookLM / 推進 NotebookLM
 
-| 說 | 得到 |
-|----|------|
-| 生成播客 / generate podcast | WAV 音檔 |
-| 做成 PPT / make slides | PDF 幻燈片 |
-| 畫思維導圖 / mind map | JSON 腦圖 |
-| 出題 / generate quiz | Markdown 測驗 |
-| 生成報告 / write report | Markdown 報告 |
-| 做閃卡 / flashcards | Markdown 卡片 |
+```
+"upload this video to NotebookLM https://youtube.com/watch?v=..."
+"turn this webpage into a podcast https://example.com/article"
+「把這個 PDF 生成思維導圖 ~/Documents/research.pdf」
+```
 
-## 背後三個工具
+### Supported Outputs / 可以生成什麼
 
-| 工具 | 用途 | 成本 |
+| Say / 說 | Get / 得到 |
+|----------|-----------|
+| generate podcast / 生成播客 | WAV audio file |
+| make slides / 做成 PPT | PDF slides |
+| mind map / 畫思維導圖 | JSON mind map |
+| generate quiz / 出題 | Markdown quiz |
+| write report / 生成報告 | Markdown report |
+| flashcards / 做閃卡 | Markdown cards |
+
+NotebookLM also supports video, infographic, and data-table outputs.
+
+### Multi-Source / 多源合併
+
+A single notebook can hold up to 50 sources. Add everything first, then generate:
+
+```
+"Upload these and make a report:
+ - https://example.com/article
+ - https://youtube.com/watch?v=xyz
+ - ~/Documents/research.pdf"
+```
+
+## Built With / 背後工具
+
+| Tool | Role | Cost |
 |------|------|------|
-| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | 搜 YouTube、抓元數據、下載字幕 | 免費 |
-| [notebooklm-py](https://github.com/nicholasgcoles/notebooklm-py) | NotebookLM CLI 橋接 | 免費 |
-| [markitdown](https://github.com/microsoft/markitdown) | PDF/DOCX/PPTX 轉 Markdown | 免費 |
+| [yt-dlp](https://github.com/yt-dlp/yt-dlp) | YouTube search, metadata, subtitles | Free |
+| [notebooklm-py](https://github.com/nicholasgcoles/notebooklm-py) | NotebookLM CLI bridge | Free |
+| [markitdown](https://github.com/microsoft/markitdown) | Convert PDF/DOCX/PPTX to Markdown | Free |
 
-## 檔案結構
-
-```
-youtube-to-notebooklm/
-├── skills/
-│   ├── yt-search/
-│   │   └── skill.md              # YouTube 搜尋 + 字幕 Skill
-│   └── anything-to-notebooklm/
-│       ├── skill.md              # NotebookLM 上傳 + 生成 Skill
-│       └── references/
-│           ├── examples.md       # 使用範例
-│           └── troubleshooting.md # 故障排查
-├── evals/
-│   └── yt-search-trigger-eval.json  # Skill 觸發測試集
-├── install.sh                    # 一鍵安裝腳本
-└── README.md
-```
-
-## Windows 注意
-
-Windows 上中文輸出可能亂碼，CLI 指令前加 `PYTHONUTF8=1`：
-
-```bash
-PYTHONUTF8=1 notebooklm create "筆記本名稱"
-```
-
-## 授權
-
-MIT
+> [!TIP]
+> **Windows users**: Prefix CLI commands with `PYTHONUTF8=1` if you see garbled Chinese output.
+> **Windows 用戶**：中文亂碼時在指令前加 `PYTHONUTF8=1`。
+> ```bash
+> PYTHONUTF8=1 notebooklm create "筆記本名稱"
+> ```
