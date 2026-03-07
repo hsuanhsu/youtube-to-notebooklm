@@ -25,7 +25,7 @@ Agent：下載 34 MB 播客到你的電腦
 | Skill | 功能 | 底層工具 |
 |-------|------|----------|
 | **yt-search** | 搜尋 YouTube、取得影片資訊、下載字幕 | [yt-dlp](https://github.com/yt-dlp/yt-dlp) |
-| **anything-to-notebooklm** | 將任何內容上傳到 NotebookLM 並生成產出 | [notebooklm-py](https://github.com/nicholasgcoles/notebooklm-py) |
+| **anything-to-notebooklm** | 將任何內容上傳到 NotebookLM 並生成產出 | [notebooklm-py](https://github.com/teng-lin/notebooklm-py) |
 | **whisper-transcribe** | 轉錄音頻/影片、翻譯字幕、寄到信箱/雲端 | [faster-whisper](https://github.com/SYSTRAN/faster-whisper) |
 
 ```
@@ -171,7 +171,7 @@ Agent：翻譯字幕、上傳、生成播客 → WAV 檔案
 | 工具 | 功能 | 費用 |
 |------|------|------|
 | [yt-dlp](https://github.com/yt-dlp/yt-dlp) | YouTube 搜尋、影片資訊、字幕下載 | 免費 |
-| [notebooklm-py](https://github.com/nicholasgcoles/notebooklm-py) | NotebookLM CLI 橋接 | 免費 |
+| [notebooklm-py](https://github.com/teng-lin/notebooklm-py) | NotebookLM CLI 橋接 | 免費 |
 | [markitdown](https://github.com/microsoft/markitdown) | PDF/DOCX/PPTX 轉 Markdown | 免費 |
 | [faster-whisper](https://github.com/SYSTRAN/faster-whisper) | 高準確度語音轉文字 | 免費（本地） |
 

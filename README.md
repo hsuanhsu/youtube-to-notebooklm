@@ -25,7 +25,7 @@ Three [AI Agent Skills](https://docs.anthropic.com/en/docs/claude-code/skills) t
 | Skill | What it does | Powered by |
 |-------|-------------|------------|
 | **yt-search** | Search YouTube, get metadata, download subtitles | [yt-dlp](https://github.com/yt-dlp/yt-dlp) |
-| **anything-to-notebooklm** | Upload any content to NotebookLM and generate outputs | [notebooklm-py](https://github.com/nicholasgcoles/notebooklm-py) |
+| **anything-to-notebooklm** | Upload any content to NotebookLM and generate outputs | [notebooklm-py](https://github.com/teng-lin/notebooklm-py) |
 | **whisper-transcribe** | Transcribe audio/video, translate subtitles, deliver via email/cloud | [faster-whisper](https://github.com/SYSTRAN/faster-whisper) |
 
 ```
@@ -171,7 +171,7 @@ Agent: Translates subtitles, uploads, generates podcast → WAV file
 | Tool | Role | Cost |
 |------|------|------|
 | [yt-dlp](https://github.com/yt-dlp/yt-dlp) | YouTube search, metadata, subtitles | Free |
-| [notebooklm-py](https://github.com/nicholasgcoles/notebooklm-py) | NotebookLM CLI bridge | Free |
+| [notebooklm-py](https://github.com/teng-lin/notebooklm-py) | NotebookLM CLI bridge | Free |
 | [markitdown](https://github.com/microsoft/markitdown) | Convert PDF/DOCX/PPTX to Markdown | Free |
 | [faster-whisper](https://github.com/SYSTRAN/faster-whisper) | High-accuracy speech-to-text | Free (local) |
 
