@@ -2,40 +2,56 @@
 
 Search YouTube, grab transcripts, push to NotebookLM, and generate podcasts, mind maps, quizzes — all from your terminal with natural language.
 
-搜 YouTube 影片、抓逐字稿、推進 NotebookLM，生成播客、思維導圖、測驗 — 全程在終端用自然語言完成。
+[Overview](#overview) • [Getting started](#getting-started) • [Usage](#usage) • [Built with](#built-with)
+
+[![中文版 README](https://img.shields.io/badge/中文版-README-blue)](README.zh-TW.md)
 
 ```
 You:   "Find me videos about cold pressed juice"
-       「幫我找 cold pressed juice 的教學影片」
-            ↓  yt-search skill
+            ↓  yt-search
 Agent: Lists 20 videos (title, channel, duration, views)
             ↓  You pick one
 You:   "Upload #3 to NotebookLM and generate a podcast"
-       「把第 3 部上傳到 NotebookLM 生成播客」
-            ↓  anything-to-notebooklm skill
+            ↓  anything-to-notebooklm
 Agent: Downloads 34 MB podcast to your machine
 ```
 
 ![Demo: mind map, summary with footnotes, and podcast generation in terminal](demo.png)
 
-## How It Works / 運作方式
+## Overview
 
-Two [AI Agent Skills](https://docs.anthropic.com/en/docs/claude-code/skills) that work together:
+Three [AI Agent Skills](https://docs.anthropic.com/en/docs/claude-code/skills) that work together inside your terminal. You talk; the agent figures out which skill to call.
 
-| Skill | What it does |
-|-------|-------------|
-| **yt-search** | Search YouTube, get metadata, download subtitles via [yt-dlp](https://github.com/yt-dlp/yt-dlp) |
-| **anything-to-notebooklm** | Upload any content to [NotebookLM](https://notebooklm.google.com/) and generate outputs via [notebooklm-py](https://github.com/nicholasgcoles/notebooklm-py) |
+| Skill | What it does | Powered by |
+|-------|-------------|------------|
+| **yt-search** | Search YouTube, get metadata, download subtitles | [yt-dlp](https://github.com/yt-dlp/yt-dlp) |
+| **anything-to-notebooklm** | Upload any content to NotebookLM and generate outputs | [notebooklm-py](https://github.com/nicholasgcoles/notebooklm-py) |
+| **whisper-transcribe** | Transcribe audio/video, translate subtitles, deliver via email/cloud | [faster-whisper](https://github.com/SYSTRAN/faster-whisper) |
 
-Your AI agent reads these skills and knows when to call which tool — you just talk to it.
+```
+User ──natural language──▶ AI Agent
+                              │
+          ┌───────────────────┼───────────────────┐
+          ▼                   ▼                   ▼
+     yt-search      anything-to-notebooklm  whisper-transcribe
+     (yt-dlp)         (notebooklm-py)       (faster-whisper)
+          │                   │                   │
+          ▼                   ▼                   ▼
+   Search results      Podcasts, slides,    SRT/TXT transcripts
+   Subtitles           mind maps, quizzes   Translated subtitles
+```
 
-## Prerequisites / 前置條件
+## Getting started
+
+### Prerequisites
 
 - **Python 3.10+**
-- **Google account** (NotebookLM is free / NotebookLM 免費)
-- **AI Agent with Skills support** — Claude Code, Cursor, Windsurf, or any agent that reads `~/.claude/skills/`
+- **Google account** — NotebookLM is free
+- **AI Agent with Skills support** — [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Cursor](https://www.cursor.com/), [Windsurf](https://windsurf.com/), or any agent that reads `~/.claude/skills/`
 
-## Getting Started / 安裝
+### Installation
+
+**macOS / Linux / Git Bash:**
 
 ```bash
 git clone https://github.com/azuma520/youtube-to-notebooklm.git
@@ -43,71 +59,90 @@ cd youtube-to-notebooklm
 bash install.sh
 ```
 
-The script installs three pip packages, copies the skills to `~/.claude/skills/`, and opens a browser to log in to NotebookLM (one-time).
+**Windows (PowerShell):**
 
-安裝腳本會裝三個 pip 套件、複製 Skills、開瀏覽器登入 NotebookLM（只需一次）。
+```powershell
+git clone https://github.com/azuma520/youtube-to-notebooklm.git
+cd youtube-to-notebooklm
+.\install.ps1
+```
+
+The installer does three things:
+
+1. Installs pip packages (`yt-dlp`, `notebooklm-py`, `markitdown`)
+2. Copies skills to your agent's skill directory (auto-detects Claude Code, Cursor, Windsurf)
+3. Opens a browser to log in to NotebookLM (one-time)
 
 > [!IMPORTANT]
 > After installation, **restart your AI agent** to load the new skills.
-> 安裝完請**重啟 AI Agent** 讓它載入新 Skills。
 
 <details>
-<summary>Manual installation / 手動安裝</summary>
+<summary>Manual installation</summary>
 
 ```bash
 pip install yt-dlp notebooklm-py markitdown
 
 cp -r skills/yt-search ~/.claude/skills/
 cp -r skills/anything-to-notebooklm ~/.claude/skills/
+cp -r skills/whisper-transcribe ~/.claude/skills/
 
 notebooklm login
 ```
 
 </details>
 
-## Usage / 用法
+## Usage
 
 Talk to your agent in natural language. Skills trigger automatically.
 
-安裝完直接用自然語言對 AI Agent 說話，Skills 會自動觸發。
-
-### Search YouTube / 搜影片
+### Search YouTube
 
 ```
 "search YouTube for videos about trade show booth setup"
-「搜影片 台灣水果外銷」
-「幫我搜 NFC juice market 的 YouTube 影片」
+"find me some tutorials on NFC juice processing"
 ```
 
-### Get Transcripts / 抓字幕
+### Get transcripts
 
 ```
 "get the transcript of this video https://youtu.be/..."
-「幫我抓這部影片的字幕 https://youtube.com/watch?v=...」
+"download the English subtitles from this video"
 ```
 
-### Push to NotebookLM / 推進 NotebookLM
+### Transcribe with Whisper
+
+When YouTube has no subtitles or auto-captions are inaccurate:
 
 ```
-"upload this video to NotebookLM https://youtube.com/watch?v=..."
-"turn this webpage into a podcast https://example.com/article"
-「把這個 PDF 生成思維導圖 ~/Documents/research.pdf」
+"this video has no subtitles, transcribe it with Whisper"
+"transcribe this and translate to Chinese, then send to my email"
 ```
 
-### Supported Outputs / 可以生成什麼
+> [!NOTE]
+> `whisper-transcribe` requires additional setup (GPU recommended). See the skill's [setup guide](skills/whisper-transcribe/references/setup.md) for details.
 
-| Say / 說 | Get / 得到 |
-|----------|-----------|
-| generate podcast / 生成播客 | WAV audio file |
-| make slides / 做成 PPT | PDF slides |
-| mind map / 畫思維導圖 | JSON mind map |
-| generate quiz / 出題 | Markdown quiz |
-| write report / 生成報告 | Markdown report |
-| flashcards / 做閃卡 | Markdown cards |
+### Push to NotebookLM
+
+```
+"upload this video to NotebookLM and generate a podcast"
+"turn this webpage into a mind map https://example.com/article"
+"make slides from this PDF ~/Documents/research.pdf"
+```
+
+### Supported outputs
+
+| Say | Get |
+|-----|-----|
+| generate podcast | WAV audio (deep-dive, brief, critique, debate) |
+| make slides | PDF slides or editable PPTX |
+| mind map | JSON mind map |
+| generate quiz | Markdown quiz |
+| write report | Markdown report |
+| flashcards | Markdown cards |
 
 NotebookLM also supports video, infographic, and data-table outputs.
 
-### Multi-Source / 多源合併
+### Multi-source
 
 A single notebook can hold up to 50 sources. Add everything first, then generate:
 
@@ -118,17 +153,30 @@ A single notebook can hold up to 50 sources. Add everything first, then generate
  - ~/Documents/research.pdf"
 ```
 
-## Built With / 背後工具
+### End-to-end workflow
+
+```
+You:   "Search YouTube for AI agent tutorials"
+Agent: Lists 20 videos with metadata
+You:   "Get the transcript of #3"
+Agent: No subtitles available for this video
+You:   "Transcribe it with Whisper"
+Agent: Downloads audio, transcribes → SRT + TXT
+You:   "Translate to Chinese and upload to NotebookLM as a podcast"
+Agent: Translates subtitles, uploads, generates podcast → WAV file
+```
+
+## Built with
 
 | Tool | Role | Cost |
 |------|------|------|
 | [yt-dlp](https://github.com/yt-dlp/yt-dlp) | YouTube search, metadata, subtitles | Free |
 | [notebooklm-py](https://github.com/nicholasgcoles/notebooklm-py) | NotebookLM CLI bridge | Free |
 | [markitdown](https://github.com/microsoft/markitdown) | Convert PDF/DOCX/PPTX to Markdown | Free |
+| [faster-whisper](https://github.com/SYSTRAN/faster-whisper) | High-accuracy speech-to-text | Free (local) |
 
 > [!TIP]
-> **Windows users**: Prefix CLI commands with `PYTHONUTF8=1` if you see garbled Chinese output.
-> **Windows 用戶**：中文亂碼時在指令前加 `PYTHONUTF8=1`。
+> **Windows users**: prefix CLI commands with `PYTHONUTF8=1` if you see garbled output with non-ASCII characters.
 > ```bash
-> PYTHONUTF8=1 notebooklm create "筆記本名稱"
+> PYTHONUTF8=1 notebooklm create "my notebook"
 > ```

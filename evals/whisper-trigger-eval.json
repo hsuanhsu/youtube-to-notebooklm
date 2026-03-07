@@ -1,0 +1,22 @@
+[
+  {"query": "這部影片沒有字幕，能不能用 Whisper 幫我轉錄 https://youtube.com/watch?v=abc123", "should_trigger": true},
+  {"query": "the auto captions on this video are terrible, can you transcribe it properly? https://youtu.be/xyz789", "should_trigger": true},
+  {"query": "我有一段會議錄音 ~/Downloads/meeting.mp3，幫我轉成逐字稿", "should_trigger": true},
+  {"query": "幫我把這個影片的字幕翻譯成繁體中文 https://youtube.com/watch?v=def456", "should_trigger": true},
+  {"query": "transcribe this podcast episode and send it to my email ~/Downloads/episode.wav", "should_trigger": true},
+  {"query": "這部影片只有日文字幕，幫我轉錄成文字然後翻成中文", "should_trigger": true},
+  {"query": "幫我用 Whisper 把這個語音檔轉文字，然後上傳到 Google Drive", "should_trigger": true},
+  {"query": "I need accurate subtitles for this lecture video, YouTube's auto-generated ones are wrong https://youtube.com/watch?v=ghi789", "should_trigger": true},
+  {"query": "語音轉文字 這段錄音 C:\\Users\\me\\recording.m4a", "should_trigger": true},
+  {"query": "speech to text this interview and translate to English", "should_trigger": true},
+  {"query": "幫我搜 YouTube 上面有沒有 AI agent 的教學影片", "should_trigger": false},
+  {"query": "幫我抓這部影片的字幕 https://youtube.com/watch?v=abc123", "should_trigger": false},
+  {"query": "把這篇文章上傳到 NotebookLM 生成播客", "should_trigger": false},
+  {"query": "summarize this article for me https://example.com/article", "should_trigger": false},
+  {"query": "幫我寫一封 email 給客戶", "should_trigger": false},
+  {"query": "search YouTube for videos about machine learning", "should_trigger": false},
+  {"query": "幫我把這個 PDF 做成思維導圖", "should_trigger": false},
+  {"query": "translate this paragraph to Japanese", "should_trigger": false},
+  {"query": "幫我錄音", "should_trigger": false},
+  {"query": "download this video https://youtube.com/watch?v=abc123", "should_trigger": false}
+]

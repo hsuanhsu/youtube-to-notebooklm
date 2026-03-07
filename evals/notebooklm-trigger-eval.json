@@ -1,0 +1,22 @@
+[
+  {"query": "把這篇文章生成播客 https://example.com/ai-trends-2026", "should_trigger": true},
+  {"query": "help me turn this YouTube video into a mind map https://youtube.com/watch?v=abc123", "should_trigger": true},
+  {"query": "我下載了一份 PDF 在 ~/Downloads/quarterly-report.pdf，幫我做成 PPT", "should_trigger": true},
+  {"query": "upload these three links to NotebookLM and generate a summary report:\n- https://example.com/article1\n- https://youtu.be/xyz789\n- ~/Documents/research.pdf", "should_trigger": true},
+  {"query": "搜尋 'cold pressed juice market' 並幫我整理成報告上傳到 NotebookLM", "should_trigger": true},
+  {"query": "把這個 DOCX 檔做成閃卡 C:\\Users\\me\\report.docx", "should_trigger": true},
+  {"query": "I want to create a quiz from this article https://blog.example.com/machine-learning-basics", "should_trigger": true},
+  {"query": "幫我把這三個影片的內容合併做成一個播客", "should_trigger": true},
+  {"query": "generate an infographic from this webpage https://data.example.com/stats", "should_trigger": true},
+  {"query": "加到我的「果汁市場研究」筆記本，然後生成思維導圖 https://example.com/juice-report", "should_trigger": true},
+  {"query": "幫我找 cold pressed juice 的教學影片", "should_trigger": false},
+  {"query": "search YouTube for videos about trade show booth setup", "should_trigger": false},
+  {"query": "幫我抓這部影片的字幕 https://youtube.com/watch?v=def456", "should_trigger": false},
+  {"query": "summarize this article for me https://example.com/article", "should_trigger": false},
+  {"query": "幫我寫一封 email 給供應商確認出貨時間", "should_trigger": false},
+  {"query": "create a PowerPoint presentation about our Q4 sales from scratch", "should_trigger": false},
+  {"query": "read this PDF and tell me what it says ~/Documents/contract.pdf", "should_trigger": false},
+  {"query": "幫我用 Google 搜尋 NRA 2026 exhibitor list", "should_trigger": false},
+  {"query": "download this webpage and save it as markdown https://docs.example.com/api", "should_trigger": false},
+  {"query": "幫我把這段文字翻譯成英文", "should_trigger": false}
+]
