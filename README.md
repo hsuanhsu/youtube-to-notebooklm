@@ -54,7 +54,7 @@ User ──natural language──▶ AI Agent
 **macOS / Linux / Git Bash:**
 
 ```bash
-git clone https://github.com/azuma520/youtube-to-notebooklm.git
+git clone https://github.com/hsuanhsu/youtube-to-notebooklm.git
 cd youtube-to-notebooklm
 bash install.sh
 ```
@@ -62,7 +62,7 @@ bash install.sh
 **Windows (PowerShell):**
 
 ```powershell
-git clone https://github.com/azuma520/youtube-to-notebooklm.git
+git clone https://github.com/hsuanhsu/youtube-to-notebooklm.git
 cd youtube-to-notebooklm
 .\install.ps1
 ```

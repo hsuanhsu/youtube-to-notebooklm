@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(notebooklm generate audio --wait)",
+      "Bash(notebooklm generate mind-map)",
+      "WebFetch(domain:www.youtube.com)"
+    ]
+  }
+}
