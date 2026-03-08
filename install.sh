@@ -14,10 +14,33 @@ echo ""
 
 # 1. 安裝 Python 依賴
 echo "[1/3] 安裝 Python 依賴..."
-pip install "yt-dlp>=2024.0" "notebooklm-py>=0.1" "markitdown>=0.1" || {
+
+# 偵測可用的 pip 指令
+if command -v pip3 &>/dev/null; then
+  PIP=pip3
+elif command -v pip &>/dev/null; then
+  PIP=pip
+else
+  echo "  ✗ 找不到 pip，請確認 Python 3.10+ 已安裝"
+  exit 1
+fi
+
+# 嘗試安裝，自動處理 externally-managed-environment
+$PIP install --break-system-packages "yt-dlp>=2024.0" "notebooklm-py>=0.1" markitdown 2>/dev/null || \
+$PIP install "yt-dlp>=2024.0" "notebooklm-py>=0.1" markitdown || {
   echo "  ✗ pip install 失敗，請確認 Python 3.10+ 已安裝"
   exit 1
 }
+
+# 安裝 playwright 瀏覽器（notebooklm-py 的依賴）
+if command -v playwright &>/dev/null; then
+  playwright install chromium
+else
+  python3 -m playwright install chromium 2>/dev/null || \
+  $PIP install --break-system-packages playwright && playwright install chromium || \
+  echo "  ⚠ playwright 安裝失敗，notebooklm login 可能無法使用"
+fi
+
 echo "  ✓ yt-dlp, notebooklm-py, markitdown 安裝完成"
 echo ""
 
@@ -31,10 +54,8 @@ else
 fi
 
 echo "[2/3] 複製 Skills 到 ${SKILL_DIR}..."
-
 mkdir -p "${SKILL_DIR}/yt-search/scripts"
 mkdir -p "${SKILL_DIR}/anything-to-notebooklm/references"
-# Clean up old skill.md if upgrading from v1.x
 rm -f "${SKILL_DIR}/anything-to-notebooklm/skill.md"
 mkdir -p "${SKILL_DIR}/whisper-transcribe/scripts"
 mkdir -p "${SKILL_DIR}/whisper-transcribe/references"
@@ -50,6 +71,7 @@ cp skills/whisper-transcribe/skill.md "${SKILL_DIR}/whisper-transcribe/skill.md"
 cp skills/whisper-transcribe/scripts/transcribe.py "${SKILL_DIR}/whisper-transcribe/scripts/transcribe.py"
 cp skills/whisper-transcribe/scripts/translate_srt.py "${SKILL_DIR}/whisper-transcribe/scripts/translate_srt.py"
 cp skills/whisper-transcribe/references/setup.md "${SKILL_DIR}/whisper-transcribe/references/setup.md"
+
 echo "  ✓ yt-search + anything-to-notebooklm + whisper-transcribe Skills 已安裝"
 echo ""
 
