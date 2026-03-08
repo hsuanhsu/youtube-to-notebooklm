@@ -133,7 +133,7 @@ When YouTube has no subtitles or auto-captions are inaccurate:
 
 | Say | Get |
 |-----|-----|
-| generate podcast | WAV audio (deep-dive, brief, critique, debate) |
+| generate podcast | Audio podcast (deep-dive, brief, critique, debate) |
 | make slides | PDF slides or editable PPTX |
 | mind map | JSON mind map |
 | generate quiz | Markdown quiz |
@@ -163,7 +163,7 @@ Agent: No subtitles available for this video
 You:   "Transcribe it with Whisper"
 Agent: Downloads audio, transcribes → SRT + TXT
 You:   "Translate to Chinese and upload to NotebookLM as a podcast"
-Agent: Translates subtitles, uploads, generates podcast → WAV file
+Agent: Translates subtitles, uploads, generates podcast → MP4 audio file
 ```
 
 ## Built with
