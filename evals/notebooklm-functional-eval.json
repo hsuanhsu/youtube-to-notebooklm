@@ -1,0 +1,128 @@
+{
+  "skill_name": "anything-to-notebooklm",
+  "evals": [
+    {
+      "id": 1,
+      "name": "workflow-a-basic-upload",
+      "prompt": "把這篇文章上傳到 NotebookLM 生成播客 https://example.com/article",
+      "expected_output": "Creates notebook, adds source with correct syntax, waits for processing, generates audio with --wait, downloads as .mp4",
+      "files": [],
+      "expectations": [
+        "Uses 'notebooklm create' to create a notebook",
+        "Uses 'notebooklm source add' WITHOUT '--wait' flag on source add",
+        "Uses 'notebooklm source wait' as a separate command to wait for source processing",
+        "Uses 'notebooklm generate audio --wait' for generation",
+        "Download file extension is .mp4, NOT .wav"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "workflow-a-video-style",
+      "prompt": "把這個網頁做成 retro 風格的影片 https://example.com/data",
+      "expected_output": "Uses --style retro-print (not retro) for video generation",
+      "files": [],
+      "expectations": [
+        "Uses '--style retro-print' in the generate video command",
+        "Does NOT use '--style retro' (this value does not exist)",
+        "Uses 'source wait' instead of 'source add --wait'"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "workflow-b-browse-notebooks",
+      "prompt": "我想看看之前的 notebook 有哪些，找一個關於市場分析的",
+      "expected_output": "Lists notebooks, does NOT create a new one. Uses Workflow B commands.",
+      "files": [],
+      "expectations": [
+        "Uses 'notebooklm list' to show existing notebooks",
+        "Does NOT use 'notebooklm create' (user wants to browse, not create)",
+        "Uses 'notebooklm use <id>' to switch to the target notebook"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "workflow-b-ask-question",
+      "prompt": "幫我問一下 NotebookLM 上的筆記本，AI 趨勢那個，裡面有沒有提到 transformer architecture",
+      "expected_output": "Browses notebooks, switches to the right one, asks the question",
+      "files": [],
+      "expectations": [
+        "Uses 'notebooklm list' to find the notebook",
+        "Uses 'notebooklm use <id>' to switch context",
+        "Uses 'notebooklm ask' to pose the question"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "workflow-b-download-artifact",
+      "prompt": "我之前有生成一個播客，幫我下載",
+      "expected_output": "Lists notebooks, switches to the right one, lists artifacts, downloads the audio",
+      "files": [],
+      "expectations": [
+        "Uses 'notebooklm list' or checks current context",
+        "Uses 'notebooklm artifact list' to find the generated audio",
+        "Uses 'notebooklm download audio' with --latest or specific artifact ID",
+        "Download file extension is .mp4, NOT .wav"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "never-list-source-wait",
+      "prompt": "上傳這個 PDF 到 NotebookLM ~/Documents/report.pdf",
+      "expected_output": "Uses source wait as separate command, never source add --wait",
+      "files": [],
+      "expectations": [
+        "The command sequence includes 'source wait' as a separate step",
+        "Does NOT use 'source add --wait' or 'source add \"...\" --wait' in any command",
+        "Confirms notebook name with user before creating"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "slide-revision-zero-based",
+      "prompt": "生成完簡報後，幫我修改第一頁的標題",
+      "expected_output": "Uses --slide 0 for the first slide (zero-based index)",
+      "files": [],
+      "expectations": [
+        "Uses 'generate slide-deck --wait' first",
+        "Uses 'revise-slide' with '--slide 0' for the first slide",
+        "Does NOT use '--slide 1' for the first slide"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "generate-async-awareness",
+      "prompt": "幫我同時生成報告和播客",
+      "expected_output": "Acknowledges that generate is async by default, uses --wait appropriately",
+      "files": [],
+      "expectations": [
+        "Uses '--wait' flag on generate commands",
+        "Does NOT assume generate commands block without --wait"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "workflow-decision-ambiguous",
+      "prompt": "NotebookLM 上那個筆記本幫我加一個新的來源進去 https://example.com/new-article",
+      "expected_output": "Recognizes this is adding to an existing notebook (Workflow B browse first, then A add source)",
+      "files": [],
+      "expectations": [
+        "Uses 'notebooklm list' to find the existing notebook",
+        "Uses 'notebooklm use <id>' to switch to it",
+        "Uses 'source add' to add the new source (does NOT create a new notebook)",
+        "Uses 'source wait' after adding the source"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "pptx-markitdown-routing",
+      "prompt": "把這個 PPTX 上傳到 NotebookLM C:\Users\me\slides.pptx",
+      "expected_output": "Uses markitdown to convert PPTX first, then source add the converted file",
+      "files": [],
+      "expectations": [
+        "Uses 'markitdown' to convert the PPTX file to markdown",
+        "Does NOT directly 'source add' the .pptx file",
+        "Uses 'source add' on the converted markdown file"
+      ]
+    }
+  ]
+}

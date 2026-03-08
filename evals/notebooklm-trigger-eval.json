@@ -9,6 +9,17 @@
   {"query": "幫我把這三個影片的內容合併做成一個播客", "should_trigger": true},
   {"query": "generate an infographic from this webpage https://data.example.com/stats", "should_trigger": true},
   {"query": "加到我的「果汁市場研究」筆記本，然後生成思維導圖 https://example.com/juice-report", "should_trigger": true},
+  {"query": "幫我問一下 NotebookLM 上那個筆記本，裡面有沒有提到供應商名單", "should_trigger": true},
+
+  {"query": "我之前有個 notebook 叫市場分析，幫我找一下", "should_trigger": true},
+  {"query": "check my notebooks, do I have one about AI trends?", "should_trigger": true},
+  {"query": "what notebooks do I have on NotebookLM?", "should_trigger": true},
+  {"query": "幫我下載之前生成的播客", "should_trigger": true},
+  {"query": "download the podcast I generated earlier", "should_trigger": true},
+  {"query": "瀏覽一下我的筆記本，看看之前上傳了什麼", "should_trigger": true},
+  {"query": "搜尋 notebook 裡有沒有關於定價策略的內容", "should_trigger": true},
+  {"query": "list all my NotebookLM notebooks and show me the sources in the latest one", "should_trigger": true},
+
   {"query": "幫我找 cold pressed juice 的教學影片", "should_trigger": false},
   {"query": "search YouTube for videos about trade show booth setup", "should_trigger": false},
   {"query": "幫我抓這部影片的字幕 https://youtube.com/watch?v=def456", "should_trigger": false},
@@ -18,5 +29,7 @@
   {"query": "read this PDF and tell me what it says ~/Documents/contract.pdf", "should_trigger": false},
   {"query": "幫我用 Google 搜尋 NRA 2026 exhibitor list", "should_trigger": false},
   {"query": "download this webpage and save it as markdown https://docs.example.com/api", "should_trigger": false},
-  {"query": "幫我把這段文字翻譯成英文", "should_trigger": false}
+  {"query": "幫我把這段文字翻譯成英文", "should_trigger": false},
+  {"query": "幫我在 Obsidian 裡建一張筆記", "should_trigger": false},
+  {"query": "what's on my Google Calendar today?", "should_trigger": false}
 ]
